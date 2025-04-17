@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/bpbin/">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1" name="viewport">
+<meta content="Blueprint storing and sharing service for the Deep Space Airships (drednot.io/Dredark) game." name="description">
+<meta content="summary" name="twitter:card">
+<meta content="website" property="og:type">
+<meta content="Blueprint Bin - DSA Tools" property="og:title">
+<meta content="Store and share blueprints with ease." property="og:description">
+<meta content="#1f80b1" property="theme-color">
+<title>New - Blueprint Bin</title>
+<link href="/app.webmanifest" rel="manifest">
+<script type="module" src="/assets/sw-reg.js"></script>
+<link href="/assets/icons/64.webp" rel="icon" type="image/png">
+<link href="/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header></header>
+<div class="grid" id="main-container">
+<div class="card">
+<p><a href="./stats"><b>Statistics</b></a></p>
+<hr>
+<p class="smaller">Blueprint storing and sharing service.</p>
+<p class="smaller">ALPHA VERSION ⚠️ All stored blueprints will be deleted once the app is out of alpha. Feedback is welcome.</p>
+</div>
+<div class="card">
+<h2>New Post</h2>
+<p>Post a blueprint to share with others.</p>
+<form id="form-post">
+<h4>Title</h4>
+<p class="smaller">Please avoid including width/height here, it will be displayed by the app.</p>
+<p>
+<input id="title" maxlength="128" placeholder="Short and descriptive title">
+</p>
+<h4>Description</h4>
+<p class="smaller">Optional, supports Markdown.</p>
+<p>
+<textarea id="desc" placeholder="## Features&#10;- *foo* **bar**" rows="3" maxlength="32768"></textarea>
+</p>
+<h4>Blueprint String</h4>
+<p>
+<textarea id="bp" placeholder="DSA:..." rows="6" minlength="3" name="bp" required spellcheck="false"></textarea>
+</p>
+<p>
+<input id="button-submit" type="button" value="Create">
+<span id="error"></span>
+</p>
+</form>
+</div>
+<div class="card">
+<h5>
+Short Terms
+</h5>
+<ul class="smaller">
+<li>Completely anonymous; only the data you enter is stored, with no personally identifiable information.</li>
+<li>The stored data may be altered or deleted at any time for any reason.</li>
+<li>The blueprints are not publicly listed but can be accessed with their link.</li>
+<li>Users cannot edit or delete their own blueprints, but it is a planned feature.</li>
+</ul>
+</div>
+<footer></footer>
+</div>
+<script type="module">import{loadHF as t}from"/main.js";t("by <a href='https://github.com/Blueyescat' target='_blank'>Blueyescat</a>.","Blueprint Bin");const e=document.getElementById("form-post"),n=document.getElementById("button-submit"),o=document.getElementById("title"),r=document.getElementById("desc"),s=document.getElementById("bp"),c=document.getElementById("error");n.addEventListener("click",(async()=>{if(!e.reportValidity())return;document.body.classList.add("processing");const t=await fetch("./new",{method:"POST",body:JSON.stringify({title:o.value,desc:r.value,str:s.value})}).catch(console.error);return document.body.classList.remove("processing"),null==t?c.textContent="Network error, check your connection.":429==t.status?c.textContent="Too many requests, try again later.":400==t.status?c.textContent=(await t.json()).error:t.ok?void(window.location.href="./"+(await t.json()).id):c.textContent="Unexpected error."})),s.addEventListener("focus",(()=>s.select())),s.addEventListener("dblclick",(()=>s.select()))</script>
+<script type="module" src="/assets/goatc.js"></script>
+<style>html{height:100%}body{height:100%}body.processing,body.processing *{cursor:wait}#error{color:#d8000c}#desc,#title{width:100%;box-sizing:border-box}#bp{width:100%;box-sizing:border-box;font-size:.85em}#button-submit{font-size:1.1em;line-height:1.7em}form h4{padding-top:.4em;margin-block-end:0.5em}</style>
+</body>
+</html>

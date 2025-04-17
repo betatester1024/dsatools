@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/img2pixar/worker.js"],
+  "sourcesContent": ["globalThis.toolPath = self.location.href.substring(0, self.location.href.lastIndexOf(\"/\"))\n\nimportScripts(\"converter.js\")\n\nconst offscreenCanvas = new OffscreenCanvas(1, 1)\n\nself.addEventListener(\"message\", e => {\n\tglobalThis.img2pixar(offscreenCanvas, e.data)\n\t\t.then(imageData => postMessage({ imageData }))\n})\n"],
+  "mappings": "AAAA,WAAW,SAAW,KAAK,SAAS,KAAK,UAAU,EAAG,KAAK,SAAS,KAAK,YAAY,GAAG,CAAC,EAEzF,cAAc,cAAc,EAE5B,IAAMA,EAAkB,IAAI,gBAAgB,EAAG,CAAC,EAEhD,KAAK,iBAAiB,UAAW,GAAK,CACrC,WAAW,UAAUA,EAAiB,EAAE,IAAI,EAC1C,KAAKC,GAAa,YAAY,CAAE,UAAAA,CAAU,CAAC,CAAC,CAC/C,CAAC",
+  "names": ["offscreenCanvas", "imageData"]
+}

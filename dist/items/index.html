@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/items/">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1" name="viewport">
+<meta content="Item list for the Deep Space Airships (drednot.io/Dredark) game." name="description">
+<meta content="summary" name="twitter:card">
+<meta content="website" property="og:type">
+<meta content="Item List - DSA Tools" property="og:title">
+<meta content="List of items in the game." property="og:description">
+<meta content="#1f80b1" property="theme-color">
+<title>Item List</title>
+<link href="/app.webmanifest" rel="manifest">
+<script type="module" src="/assets/sw-reg.js"></script>
+<link href="/assets/icons/64.webp" rel="icon" type="image/png">
+<link href="/main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header></header>
+<div id="main-container" style="min-height:100vh">
+<div class="card">
+<p style="margin-top:0">
+<small>
+The data is downloaded from
+<a href="https://pub.drednot.io/test/econ/item_schema.json" target="_blank">pub.drednot.io/test/econ/item_schema.json</a>
+as the page loads, and that file updates at 0 UTC.
+</small>
+</p>
+<p>
+<input autocomplete="off" id="input-search" placeholder="Search items by name, description or ID">
+<button id="button-clear"><i class="i x"></i></button>
+<small style="float:right;padding-top:1em">Showing <span id="shown"></span><span id="total">-</span> items</small>
+</p>
+<table>
+<thead>
+<tr>
+<th style="width:10%">Image</th>
+<th style="width:5%">ID</th>
+<th style="width:20%">Name</th>
+<th style="width:50%">Description</th>
+</tr>
+</thead>
+<tbody id="content"></tbody>
+</table>
+</div>
+<footer></footer>
+</div>
+<script type="module">import{loadHF as t}from"/main.js";t("by <a href='https://github.com/Blueyescat' target='_blank'>Blueyescat</a>.");const e=document.getElementById("content");let n;try{n=await fetch("https://x.dsatools.workers.dev?https://pub.drednot.io/test/econ/item_schema.json",{cache:"reload"}).then((t=>t.json()))}catch(t){e.innerHTML=`<td></td><td>Error fetching or parsing the data: ${t.message}</td>`}if(n){const t=/ \(Packaged\)|, Packaged/;for(const[o,d]of n.entries())e.insertAdjacentHTML("beforeend",`<tr${o%2==0?' class="odd"':""}><td><img src="https://test.drednot.io/img/${d.image}.png"></td><td>${d.id}</td><td>${d.name.replace(t,"")}</td><td>${d.desc}</td></tr>`);const o=e.children;document.getElementById("total").textContent=o.length;const d=document.getElementById("shown"),s=document.getElementById("input-search");s.addEventListener("input",(()=>{const t=s.value.toLowerCase().trim().replace(/ +/," ");let e=0;for(const n of o)n.classList.toggle("hidden",""!=t&&!n.children[2].textContent.toLowerCase().includes(t)&&n.children[1].textContent!=t&&!n.children[3].textContent.toLowerCase().includes(t)||!++e),n.classList.toggle("odd",e%2==1);d.textContent=e<o.length?e+" out of ":""})),document.getElementById("button-clear").addEventListener("click",(()=>{s.value="",s.focus(),s.dispatchEvent(new Event("input"))}))}</script>
+<script type="module" src="/assets/goatc.js"></script>
+<style>table{background-color:#202228;border:2px solid var(--input-border-color);border-spacing:0;border-radius:8px;width:100%;overflow:hidden}thead th{background-color:#202228;border-radius:8px}.odd{background-color:var(--container-color)}td>img{vertical-align:middle;width:24px;height:24px}td,th{padding:.4rem .85rem;text-align:center}td:nth-child(2),td:nth-child(3){font-family:monospace}td:nth-child(4){font-size:small;text-align:left}#input-search{box-sizing:border-box;width:100%;max-width:450px;padding:6px;border-radius:8px}.hidden{display:none}</style>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/bpbin/view/">
+<meta charset="utf-8">
+<meta content="width=device-width,initial-scale=1" name="viewport">
+<meta content="Blueprint storing and sharing service for the Deep Space Airships (drednot.io/Dredark) game." name="description">
+<meta content="summary_large_image" name="twitter:card">
+<meta content="website" property="og:type">
+<meta content="Blueprint Bin - DSA Tools" property="og:title">
+<meta content="<%= locals.title ?? `Blueprint not found.` %>" property="og:description">
+<meta content="<%= locals.imgUrl ?? "" %>" property="og:image">
+<meta content="#1f80b1" property="theme-color">
+<title>Blueprint Bin</title>
+<link href="/app.webmanifest" rel="manifest">
+<script src="/assets/sw-reg.js" type="module"></script>
+<link href="/assets/icons/64.webp" rel="icon" type="image/png">
+<link href="/main.css" rel="stylesheet" type="text/css">
+<link href="/lib/zoomist/css.css" rel="stylesheet" type="text/css">
+<link href="main.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header></header>
+<div class="grid" id="main-container" style="--gap:0.75rem">
+<div class="card">
+<p><a href="../"><b>New Post</b></a> - <a href="../stats"><b>Statistics</b></a></p>
+<hr>
+<p class="smaller">Blueprint storing and sharing service. You can copy and share the URL of this page.</p>
+<p class="smaller">ALPHA VERSION ⚠️ All stored blueprints will be deleted once the app is out of alpha. Feedback is welcome.</p>
+</div>
+<div class="card">
+<div class="reverse-rows two-columns">
+<div id="buttons">
+<div>
+<button id="button-copy">Copy String</button>
+</div>
+<div>
+<span class="tooltip-ref" data-allow-hover data-click-triggered>
+<button id="button-view">View String</button>
+<span class="tooltip-space"></span>
+</span>
+<span class="tooltip-content" style="width:100%">
+<span>
+<textarea id="bp" readonly spellcheck="false"><%= locals.str ?? "" %></textarea>
+</span>
+</span>
+</div>
+</div>
+<div style="--column-w:0;flex-grow:1">
+<h1 id="title"><% 
+						if (locals.title) { -%>
+<%= locals.title -%>
+<% } else { -%>
+<i>Blueprint not found.</i>
+<% } -%>
+</h1>
+<p>
+<b><%= locals.width %>x<%= locals.height %></b> <span title="Turret scale">(<b><%= locals.turretWidth %>x<%= locals.turretHeight %></b>)</span>
+</p>
+</div>
+</div>
+</div>
+<div class="reverse-rows two-columns">
+<div class="card" id="preview-card" style="--column-w:30%">
+<h3>
+Preview
+<button id="button-reset-zoom">Reset Zoom</button>
+</h3>
+<div id="preview-container">
+<div class="zoomist-container">
+<div class="zoomist-wrapper">
+<div class="zoomist-image">
+<img loading="lazy" src="<%= locals.imgUrl ?? "" %>" id="preview-image">
+</div>
+</div>
+</div>
+</div>
+<p class="smaller">Use the mouse buttons to move and zoom the image, and right-click to save, copy etc.</p>
+<hr>
+<ul style="padding-left:1.1em">
+<li>Views: <b><%= locals.views %></b></li>
+<li>Length: <b><%= locals.str?.length %></b></li>
+<li>Posted At: <b data-unix="<%= locals.date %>" id="post-date" title="In your timezone"></b></li>
+<li>BP Version: <b><%= locals.ver %></b></li>
+</ul>
+<h3>Contents (<%= locals.itemsTotal ?? 0 %>)</h3>
+<ul id="items">
+<% if (locals.items) for (const item of items) { -%>
+<li><img loading="lazy" src="https://test.drednot.io/img/item/<%= item.img %>.png"> <%= item.name %>: <b><%= item.amount %></b></li><%
+					} %>
+</ul>
+</div>
+<div class="card" id="desc" style="--column-w:70%">
+<%- locals.desc ?? "-" %>
+</div>
+</div>
+<footer></footer>
+</div>
+<script src="./main.js" type="module"></script>
+</body>
+</html>
